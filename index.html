@@ -2,1083 +2,805 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Система управления грузоперевозками</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Система управления грузоперевозками | Дальнобойщик</title>
     <style>
-        :root {
-            --primary-color: #0f1a2b;
-            --secondary-color: #1a2b4b;
-            --accent-color: #2a4b8c;
-            --highlight-color: #4a7bd9;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --error-color: #e74c3c;
-            --text-color: #f1f2f6;
-            --border-color: #34495e;
-            --card-bg: rgba(26, 43, 75, 0.7);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, var(--primary-color), #0a1425);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0f1c 0%, #0c1222 100%);
+            color: #eef2ff;
             padding: 20px;
+            min-height: 100vh;
         }
-        
+
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            background: rgba(15, 26, 43, 0.9);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            background: rgba(12, 20, 35, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(74, 123, 217, 0.3);
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(74, 123, 217, 0.2);
         }
-        
+
         header {
-            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
-            padding: 30px;
+            background: linear-gradient(98deg, #0f2b4f 0%, #1a3f6e 100%);
+            padding: 1.8rem 2rem;
             text-align: center;
-            border-bottom: 3px solid var(--highlight-color);
-            position: relative;
-            overflow: hidden;
+            border-bottom: 3px solid #3b82f6;
         }
-        
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
-            background-size: 50px;
-        }
-        
+
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-            position: relative;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.4);
         }
-        
+
         .subtitle {
-            font-size: 1.2rem;
-            color: #bdc3c7;
-            margin-bottom: 20px;
-            position: relative;
+            color: #b9c7e0;
+            font-size: 1rem;
         }
-        
+
         .info-panel {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
+            gap: 1.5rem;
             flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
+            padding: 1.8rem 2rem;
+            background: rgba(0,0,0,0.2);
         }
-        
+
         .info-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
+            background: rgba(26, 43, 75, 0.7);
+            border-left: 4px solid #3b82f6;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
             flex: 1;
-            min-width: 200px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border-left: 5px solid var(--highlight-color);
-            transition: transform 0.3s ease;
+            min-width: 180px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
-        
-        .info-card:hover {
-            transform: translateY(-5px);
+
+        .info-card h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ab3e6;
+            margin-bottom: 8px;
         }
-        
-        .driver-form {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            margin: 30px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(74, 123, 217, 0.3);
+
+        .info-card p {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #f0f4ff;
         }
-        
+
+        .driver-form, .contract-card {
+            background: rgba(18, 30, 55, 0.8);
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            margin: 1.5rem 2rem;
+            border: 1px solid #2c3e66;
+        }
+
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 1.2rem;
         }
-        
+
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 0.4rem;
             font-weight: 600;
-            color: var(--highlight-color);
+            color: #90a9e6;
         }
-        
+
         input {
             width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background: rgba(15, 26, 43, 0.7);
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: var(--highlight-color);
-            box-shadow: 0 0 0 3px rgba(74, 123, 217, 0.3);
-        }
-        
-        .btn {
-            padding: 15px 30px;
-            background: linear-gradient(135deg, var(--highlight-color), #3a6bc8);
+            padding: 12px 15px;
+            background: #0a1222;
+            border: 1px solid #2c4875;
+            border-radius: 12px;
             color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.2s;
         }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+
+        input:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
         }
-        
-        .btn:hover::before {
-            left: 100%;
+
+        .btn {
+            background: linear-gradient(95deg, #2563eb, #1e40af);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        
+
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+            background: linear-gradient(95deg, #3b82f6, #2563eb);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
+
         .btn-complete {
-            background: linear-gradient(135deg, var(--success-color), #219653);
+            background: linear-gradient(95deg, #10b981, #059669);
         }
-        
-        .btn:disabled {
-            background: #7f8c8d;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .btn:disabled:hover::before {
-            left: -100%;
-        }
-        
-        .contract {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            margin: 25px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border-left: 5px solid var(--accent-color);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .contract::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--highlight-color), transparent);
-        }
-        
-        .contract.high-demand {
-            border-left: 5px solid var(--highlight-color);
-            background: linear-gradient(135deg, var(--card-bg), rgba(42, 75, 140, 0.3));
-        }
-        
-        .contract-id {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--highlight-color);
-            font-weight: bold;
-        }
-        
-        .contract-details {
-            margin-bottom: 20px;
-        }
-        
-        .contract-details p {
-            margin-bottom: 10px;
+
+        .contract-actions {
             display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             align-items: center;
+            justify-content: space-between;
         }
-        
-        .contract-details strong {
-            min-width: 120px;
-            display: inline-block;
-            color: var(--highlight-color);
+
+        .contract-card {
+            margin-bottom: 1.5rem;
+            transition: 0.2s;
+            border-left: 6px solid #3b82f6;
         }
-        
-        .contract-timer {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            padding: 10px 15px;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            display: inline-block;
+
+        .contract-card.high-demand {
+            border-left-color: #fbbf24;
+            background: linear-gradient(120deg, rgba(251,191,36,0.1), rgba(18,30,55,0.9));
+        }
+
+        .contract-id {
+            font-size: 1.6rem;
             font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: #ffd966;
         }
-        
+
+        .contract-details p {
+            margin: 8px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .contract-details strong {
+            min-width: 110px;
+            color: #9bb6f0;
+        }
+
+        .contract-timer {
+            background: #0f172f;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 40px;
+            margin: 15px 0 5px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: 1px solid #3b82f6;
+        }
+
         .salary-note {
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(39, 174, 96, 0.2);
-            border-radius: 8px;
-            border-left: 3px solid var(--success-color);
-            font-style: italic;
+            background: rgba(16, 185, 129, 0.15);
+            border-left: 3px solid #10b981;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 10px;
+            font-size: 0.9rem;
         }
-        
+
         .history-section {
-            margin: 40px 25px;
+            margin: 2rem;
         }
-        
+
         .history-header {
+            background: #0f1a2e;
+            padding: 1rem 1.5rem;
+            border-radius: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
             cursor: pointer;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: 0.2s;
         }
-        
-        .history-header h3 {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+
+        .history-header:hover {
+            background: #17223b;
         }
-        
+
         .history-content {
-            overflow: hidden;
-            transition: max-height 0.5s ease;
+            transition: max-height 0.4s ease;
+            overflow-x: auto;
         }
-        
+
         .history-content.collapsed {
-            max-height: 0;
+            display: none;
         }
-        
+
         .history-table {
             width: 100%;
             border-collapse: collapse;
-            background: var(--card-bg);
-            border-radius: 10px;
+            background: #0e162b;
+            border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            margin-top: 1rem;
         }
-        
+
         .history-table th, .history-table td {
-            padding: 18px;
+            padding: 12px 12px;
             text-align: left;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid #253553;
         }
-        
+
         .history-table th {
-            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
-            font-weight: 600;
-            color: var(--text-color);
+            background: #0b1124;
+            color: #bbd7fb;
         }
-        
-        .history-table tr:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-        
-        .status-completed {
-            color: var(--success-color);
-            font-weight: bold;
-        }
-        
-        .status-expired {
-            color: var(--error-color);
-            font-weight: bold;
-        }
-        
-        .status-active {
-            color: var(--warning-color);
-            font-weight: bold;
-        }
-        
+
+        .status-completed { color: #34d399; font-weight: bold; }
+        .status-expired { color: #f87171; font-weight: bold; }
+        .status-active { color: #fbbf24; font-weight: bold; }
+
         .clear-history {
-            margin-top: 25px;
-            padding: 20px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: #0a1222;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
         }
-        
-        .contract-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 25px;
-            flex-wrap: wrap;
-            gap: 20px;
+
+        .active-warning {
+            background: rgba(239, 68, 68, 0.2);
+            border-left: 5px solid #ef4444;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 2rem;
+            border-radius: 1rem;
         }
-        
-        .contract-actions {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .initial-generate-btn {
-            text-align: center;
-            padding: 40px;
-        }
-        
-        .initial-generate-btn .btn {
-            padding: 20px 40px;
-            font-size: 1.2rem;
-        }
-        
-        .active-contract-warning {
-            background: rgba(231, 76, 60, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 25px;
-            border-left: 4px solid var(--error-color);
-        }
-        
-        @media (max-width: 768px) {
-            .info-panel {
-                flex-direction: column;
-            }
-            
-            .contract-info {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .contract-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .history-table {
-                display: block;
-                overflow-x: auto;
-            }
+
+        @media (max-width: 700px) {
+            .history-table th, .history-table td { padding: 8px 6px; font-size: 0.8rem; }
+            .contract-id { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Система управления грузоперевозками</h1>
-            <p class="subtitle">Выберите доступный контракт для выполнения</p>
-        </header>
-        
-        <div class="info-panel">
-            <div class="info-card">
-                <h3>Следующее обновление</h3>
-                <p id="nextUpdateTimer">10:00</p>
-            </div>
-            <div class="info-card">
-                <h3>Высокий спрос</h3>
-                <p id="highDemand">Газобетон, Яблоки</p>
-            </div>
+<div class="container">
+    <header>
+        <h1>🚛 СИСТЕМА УПРАВЛЕНИЯ ГРУЗОПЕРЕВОЗКАМИ</h1>
+        <p class="subtitle">дальнобойщик — легальные грузы, маршруты, зарплата</p>
+    </header>
+
+    <div class="info-panel">
+        <div class="info-card">
+            <h3>⏳ Следующее обновление спроса</h3>
+            <p id="nextUpdateTimer">--:--</p>
         </div>
-        
-        <div id="initialGenerateSection" class="initial-generate-btn">
-            <button class="btn" id="initialGenerateContract">СГЕНЕРИРОВАТЬ ВЫЗОВ</button>
+        <div class="info-card">
+            <h3>🔥 ВЫСОКИЙ СПРОС (x2)</h3>
+            <p id="highDemand">загрузка...</p>
         </div>
-        
-        <div id="driverFormContainer" style="display: none;">
-            <div class="driver-form">
-                <h3>Данные водителя</h3>
-                <div class="form-group">
-                    <label for="firstName">Имя</label>
-                    <input type="text" id="firstName" placeholder="Введите имя">
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Отчество</label>
-                    <input type="text" id="lastName" placeholder="Введите отчество">
-                </div>
-                <div class="form-group">
-                    <label for="passport">№ Паспорта</label>
-                    <input type="text" id="passport" placeholder="Введите номер паспорта">
-                </div>
-                <div class="form-group">
-                    <label for="license">№ Водительского удостоверения</label>
-                    <input type="text" id="license" placeholder="Введите номер ВУ">
-                </div>
-                <button class="btn" id="saveDriverData">СОХРАНИТЬ ДАННЫЕ И СГЕНЕРИРОВАТЬ ВЫЗОВ</button>
-            </div>
-        </div>
-        
-        <div id="contractGenerationSection" style="display: none;">
-            <div id="activeContractWarning" class="active-contract-warning" style="display: none;">
-                <h3>⚠️ У вас есть активный вызов</h3>
-                <p>Завершите текущий вызов перед генерацией нового</p>
-            </div>
-            
-            <div class="contract-info">
-                <h2>Доступные контракты</h2>
-                <div class="contract-actions">
-                    <button class="btn" id="generateContract">СГЕНЕРИРОВАТЬ ВЫЗОВ</button>
-                    <button class="btn btn-complete" id="completeContract" style="display: none;">ЗАВЕРШИТЬ ВЫЗОВ</button>
-                </div>
-            </div>
-            
-            <div id="contractsContainer">
-                <!-- Контракты будут добавляться сюда -->
-            </div>
-        </div>
-        
-        <div class="history-section">
-            <div class="history-header" id="historyHeader">
-                <h3>
-                    <span>История контрактов</span>
-                    <span id="historyCollapseIcon">▼</span>
-                </h3>
-                <span>Всего выполнено: <span id="completedCount">0</span></span>
-            </div>
-            
-            <div class="history-content" id="historyContent">
-                <table class="history-table">
-                    <thead>
-                        <tr>
-                            <th>№ Вызова</th>
-                            <th>Дата и время</th>
-                            <th>Откуда</th>
-                            <th>Куда</th>
-                            <th>Товар</th>
-                            <th>Водитель</th>
-                            <th>ЗП</th>
-                            <th>Статус</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyTableBody">
-                        <!-- История будет добавляться сюда -->
-                    </tbody>
-                </table>
-                
-                <div class="clear-history">
-                    <div class="form-group">
-                        <label for="clearPassword">Пароль для очистки истории и сброса номера вызова</label>
-                        <input type="password" id="clearPassword" placeholder="Введите пароль">
-                    </div>
-                    <button class="btn" id="clearHistory">ОЧИСТИТЬ ИСТОРИЮ И СБРОСИТЬ НОМЕРА</button>
-                </div>
-            </div>
+        <div class="info-card">
+            <h3>✅ Выполнено вызовов</h3>
+            <p id="completedCount">0</p>
         </div>
     </div>
 
-    <script>
-        // Данные для генерации контрактов
-        const locations = [
-            "Заброшенный уч-1",
-            "Министерство внутренних дел РФ",
-            "Полевая-1",
-            "Полевая-2",
-            "Тенистая-1",
-            "МВ «Тополь»-1",
-            "МВ «Тополь»-2",
-            "Тюльпанная-1 (За границей)",
-            "Тюльпанная-2 (За границей)",
-            "Цветочная-1 (За границей)",
-            "Цветочная-2 (За границей)",
-            "Заброшенный уч-2",
-            "Васильковая (За границей)",
-            "Цветочная-3 (За границей)",
-            "МВ «Тополь»-3 (За границей)",
-            "Тенистая-2 (За границей)"
-        ];
+    <!-- Блок начальной генерации (первый запуск) -->
+    <div id="initialGenerateSection" class="initial-generate-btn" style="text-align:center; padding: 2rem;">
+        <button class="btn" id="initialGenerateContract">🚀 СГЕНЕРИРОВАТЬ ВЫЗОВ</button>
+    </div>
 
-        const products = [
-            "Яблоки", "Бананы", "Апельсины", "Виноград", "Клубника", 
-            "Картофель", "Морковь", "Лук", "Помидоры", "Огурцы", 
-            "Замороженная говядина", "Курица", "Свинина", "Лосось", "Креветки", 
-            "Сыры", "Молоко", "Йогурты", "Масло", "Мука", 
-            "Сахар", "Крупы", "Макароны", "Консервы", "Стальные листы", 
-            "Арматура", "Алюминиевые профили", "Трубы", "Цемент", "Песок", 
-            "Гравий", "Сухие смеси", "Кирпич", "Газобетон", "Пеноблоки", 
-            "Доски", "Бревна", "Фанера", "ДСП", "Холодильники", 
-            "Стиральные машины", "Телевизоры", "Диваны", "Шкафы", "Кровати", 
-            "Офисные столы", "Оптовые партии для магазинов", "Смартфоны", "Ноутбуки", "Комплектующие", 
-            "Бензин", "Дизель", "Масла", "Удобрения", "Кислоты", 
-            "Щелочи", "Пропан", "Бутан", "Лекарства", "Вакцины", 
-            "Двигатели", "Шины", "Аккумуляторы", "Трактора", "Комбайны", 
-            "Сеялки", "Бульдозеры", "Экскаваторы", "Краны", "Коровы", 
-            "Свиньи", "Лошади", "Сцены", "Колонки для концертов", "Техника", 
-            "Провизия", "Яхты", "Катера"
-        ];
+    <!-- Форма водителя -->
+    <div id="driverFormContainer" style="display: none;">
+        <div class="driver-form">
+            <h3>📄 Данные водителя (заполните или проверьте)</h3>
+            <div class="form-group">
+                <label>Имя</label>
+                <input type="text" id="firstName" placeholder="Иван">
+            </div>
+            <div class="form-group">
+                <label>Отчество</label>
+                <input type="text" id="lastName" placeholder="Иванович">
+            </div>
+            <div class="form-group">
+                <label>№ Паспорта</label>
+                <input type="text" id="passport" placeholder="серия номер">
+            </div>
+            <div class="form-group">
+                <label>№ Водительского удостоверения</label>
+                <input type="text" id="license" placeholder="ВУ 123456">
+            </div>
+            <button class="btn" id="saveDriverData">✅ СОХРАНИТЬ И СГЕНЕРИРОВАТЬ ВЫЗОВ</button>
+        </div>
+    </div>
 
-        // Категории товаров и их модификаторы зарплаты
-        const categories = {
-            "Сельхозтехника, Строительная техника, Военные грузы, Яхты и катера": 1.5,
-            "Топливо и ГСМ, Химикаты, Газ, Фармацевтика": 3,
-            "Живые животные, Музыкальное оборудование": 2,
-            "Лесоматериалы, Бытовая техника, Мебель": 1.25
+    <!-- Основная панель контрактов -->
+    <div id="contractGenerationSection" style="display: none;">
+        <div id="activeContractWarning" class="active-warning" style="display: none;">
+            ⚠️ У вас есть АКТИВНЫЙ вызов. Завершите его, прежде чем генерировать новый.
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin: 1.5rem 2rem 0 2rem;">
+            <h2>📦 Доступные контракты</h2>
+            <div class="contract-actions">
+                <button class="btn" id="generateContract">🔄 СГЕНЕРИРОВАТЬ ВЫЗОВ</button>
+                <button class="btn btn-complete" id="completeContract" style="display: none;">✅ ЗАВЕРШИТЬ ВЫЗОВ</button>
+            </div>
+        </div>
+        <div id="contractsContainer"></div>
+    </div>
+
+    <!-- История -->
+    <div class="history-section">
+        <div class="history-header" id="historyHeader">
+            <h3>📜 ИСТОРИЯ КОНТРАКТОВ <span id="historyCollapseIcon">▼</span></h3>
+            <span>Всего выполнено: <span id="completedCountHeader">0</span></span>
+        </div>
+        <div class="history-content" id="historyContent">
+            <table class="history-table">
+                <thead>
+                <tr><th>№</th><th>Дата/Время</th><th>Откуда</th><th>Куда</th><th>Товар</th><th>Водитель</th><th>ЗП</th><th>Статус</th></tr>
+                </thead>
+                <tbody id="historyTableBody"></tbody>
+            </table>
+            <div class="clear-history">
+                <div class="form-group">
+                    <label>🔐 Пароль для очистки истории и сброса номеров (121212)</label>
+                    <input type="password" id="clearPassword" placeholder="Введите пароль">
+                </div>
+                <button class="btn" id="clearHistory">🗑 ОЧИСТИТЬ ИСТОРИЮ И СБРОСИТЬ НОМЕРА</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---------- ДАННЫЕ (локации, товары, категории) ----------
+    const locations = [
+        "Заброшенный уч-1", "Министерство внутренних дел РФ", "Полевая-1", "Полевая-2",
+        "Тенистая-1", "МВ «Тополь»-1", "МВ «Тополь»-2", "Тюльпанная-1 (За границей)",
+        "Тюльпанная-2 (За границей)", "Цветочная-1 (За границей)", "Цветочная-2 (За границей)",
+        "Заброшенный уч-2", "Васильковая (За границей)", "Цветочная-3 (За границей)",
+        "МВ «Тополь»-3 (За границей)", "Тенистая-2 (За границей)"
+    ];
+
+    const products = [
+        "Яблоки","Бананы","Апельсины","Виноград","Клубника","Картофель","Морковь","Лук",
+        "Помидоры","Огурцы","Замороженная говядина","Курица","Свинина","Лосось","Креветки",
+        "Сыры","Молоко","Йогурты","Масло","Мука","Сахар","Крупы","Макароны","Консервы",
+        "Стальные листы","Арматура","Алюминиевые профили","Трубы","Цемент","Песок","Гравий",
+        "Сухие смеси","Кирпич","Газобетон","Пеноблоки","Доски","Бревна","Фанера","ДСП",
+        "Холодильники","Стиральные машины","Телевизоры","Диваны","Шкафы","Кровати",
+        "Офисные столы","Оптовые партии для магазинов","Смартфоны","Ноутбуки","Комплектующие",
+        "Бензин","Дизель","Масла","Удобрения","Кислоты","Щелочи","Пропан","Бутан","Лекарства",
+        "Вакцины","Двигатели","Шины","Аккумуляторы","Трактора","Комбайны","Сеялки","Бульдозеры",
+        "Экскаваторы","Краны","Коровы","Свиньи","Лошади","Сцены","Колонки для концертов",
+        "Техника","Провизия","Яхты","Катера"
+    ];
+
+    // категории для модификаторов
+    const productCategoriesMap = {
+        "Сельхозтехника, Строительная техника, Военные грузы, Яхты и катера": ["Трактора","Комбайны","Сеялки","Бульдозеры","Экскаваторы","Краны","Яхты","Катера","Техника"],
+        "Топливо и ГСМ, Химикаты, Газ, Фармацевтика": ["Бензин","Дизель","Масла","Удобрения","Кислоты","Щелочи","Пропан","Бутан","Лекарства","Вакцины"],
+        "Живые животные, Музыкальное оборудование": ["Коровы","Свиньи","Лошади","Сцены","Колонки для концертов"],
+        "Лесоматериалы, Бытовая техника, Мебель": ["Доски","Бревна","Фанера","ДСП","Холодильники","Стиральные машины","Телевизоры","Диваны","Шкафы","Кровати","Офисные столы"]
+    };
+    const categoryMultipliers = {
+        "Сельхозтехника, Строительная техника, Военные грузы, Яхты и катера": 1.5,
+        "Топливо и ГСМ, Химикаты, Газ, Фармацевтика": 3,
+        "Живые животные, Музыкальное оборудование": 2,
+        "Лесоматериалы, Бытовая техника, Мебель": 1.25
+    };
+
+    // Глобальное состояние
+    let driverData = null;
+    let currentContract = null;       // активный контракт { id, product, from, to, salary, driver, status, acceptedTime, endTime }
+    let contractsHistory = [];        // история
+    let contractCounter = 1;          // следующий ID
+    let highDemandProducts = [];
+    let nextUpdateTimestamp = null;    // unix ms следующего обновления спроса
+    let contractTimerInterval = null;
+    let globalUpdateInterval = null;
+
+    // DOM элементы
+    const initialGenerateBtn = document.getElementById('initialGenerateContract');
+    const saveDriverBtn = document.getElementById('saveDriverData');
+    const generateContractBtn = document.getElementById('generateContract');
+    const completeContractBtn = document.getElementById('completeContract');
+    const contractsContainer = document.getElementById('contractsContainer');
+    const highDemandElem = document.getElementById('highDemand');
+    const nextUpdateTimerSpan = document.getElementById('nextUpdateTimer');
+    const historyTbody = document.getElementById('historyTableBody');
+    const driverFormDiv = document.getElementById('driverFormContainer');
+    const contractSection = document.getElementById('contractGenerationSection');
+    const initialSection = document.getElementById('initialGenerateSection');
+    const clearHistoryBtn = document.getElementById('clearHistory');
+    const clearPass = document.getElementById('clearPassword');
+    const historyHeaderDiv = document.getElementById('historyHeader');
+    const historyContentDiv = document.getElementById('historyContent');
+    const historyCollapseIcon = document.getElementById('historyCollapseIcon');
+    const completedCountSpan = document.getElementById('completedCount');
+    const completedCountHeaderSpan = document.getElementById('completedCountHeader');
+    const activeWarningDiv = document.getElementById('activeContractWarning');
+
+    // ---------- вспомогательные ----------
+    function formatTime(date) {
+        let d = new Date(date);
+        return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')} ${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()}`;
+    }
+
+    function updateCompletedCountUI() {
+        let completed = contractsHistory.filter(c => c.status === 'completed').length;
+        completedCountSpan.innerText = completed;
+        completedCountHeaderSpan.innerText = completed;
+    }
+
+    function renderHistoryTable() {
+        historyTbody.innerHTML = '';
+        for(let item of contractsHistory.slice().reverse()) {
+            let row = historyTbody.insertRow();
+            let statusClass = '', statusText = '';
+            if(item.status === 'completed') { statusClass = 'status-completed'; statusText = 'Выполнено'; }
+            else if(item.status === 'expired') { statusClass = 'status-expired'; statusText = 'Время истекло'; }
+            else { statusClass = 'status-active'; statusText = 'Выполняется'; }
+            row.innerHTML = `
+                <td>#${item.id}</td><td>${item.date}</td><td>${item.from}</td><td>${item.to}</td>
+                <td>${item.product}</td><td>${item.driver}</td><td>${item.salary} руб.</td>
+                <td class="${statusClass}">${statusText}</td>
+            `;
+        }
+        updateCompletedCountUI();
+    }
+
+    function addToHistory(contract, statusOverride = null) {
+        let finalStatus = statusOverride || contract.status;
+        let historyItem = {
+            id: contract.id,
+            date: contract.acceptedTime ? formatTime(contract.acceptedTime) : formatTime(new Date()),
+            from: contract.from,
+            to: contract.to,
+            product: contract.product,
+            driver: contract.driver,
+            salary: contract.salary,
+            status: finalStatus
         };
+        contractsHistory.push(historyItem);
+        renderHistoryTable();
+        saveToLocalStorage();
+    }
 
-        // Товары по категориям
-        const productCategories = {
-            "Сельхозтехника, Строительная техника, Военные грузы, Яхты и катера": [
-                "Трактора", "Комбайны", "Сеялки", "Бульдозеры", "Экскаваторы", "Краны", "Яхты", "Катера"
-            ],
-            "Топливо и ГСМ, Химикаты, Газ, Фармацевтика": [
-                "Бензин", "Дизель", "Масла", "Удобрения", "Кислоты", "Щелочи", "Пропан", "Бутан", "Лекарства", "Вакцины"
-            ],
-            "Живые животные, Музыкальное оборудование": [
-                "Коровы", "Свиньи", "Лошади", "Сцены", "Колонки для концертов"
-            ],
-            "Лесоматериалы, Бытовая техника, Мебель": [
-                "Доски", "Бревна", "Фанера", "ДСП", "Холодильники", "Стиральные машины", "Телевизоры", 
-                "Диваны", "Шкафы", "Кровати", "Офисные столы"
-            ]
+    function updateHistoryStatus(contractId, newStatus) {
+        let idx = contractsHistory.findIndex(h => h.id === contractId);
+        if(idx !== -1) {
+            contractsHistory[idx].status = newStatus;
+            renderHistoryTable();
+            saveToLocalStorage();
+        }
+    }
+
+    // Расчет зарплаты
+    function calculateSalary(product, fromLoc, toLoc) {
+        let base = Math.floor(Math.random() * 4501); // 0-4500
+        // заграничный бонус
+        let isFromAbroad = fromLoc.includes('За границей');
+        let isToAbroad = toLoc.includes('За границей');
+        if(isFromAbroad && isToAbroad) base = Math.floor(base * 1.5);
+        // категорийный множитель
+        let multiplier = 1;
+        for(let [cat, goods] of Object.entries(productCategoriesMap)) {
+            if(goods.includes(product)) {
+                multiplier = categoryMultipliers[cat];
+                break;
+            }
+        }
+        base = Math.floor(base * multiplier);
+        // высокий спрос
+        if(highDemandProducts.includes(product)) base = Math.floor(base * 2);
+        return Math.max(100, base);
+    }
+
+    // Генерация нового контракта (только если нет активного)
+    function generateNewContract() {
+        if(currentContract && (currentContract.status === 'accepted' || currentContract.status === 'active')) {
+            alert('У вас уже есть активный вызов! Завершите его.');
+            return false;
+        }
+        if(!driverData) {
+            alert('Сначала укажите данные водителя');
+            return false;
+        }
+        // выбираем локации
+        let fromIdx = Math.floor(Math.random() * locations.length);
+        let toIdx = Math.floor(Math.random() * locations.length);
+        while(toIdx === fromIdx) toIdx = Math.floor(Math.random() * locations.length);
+        let fromLoc = locations[fromIdx];
+        let toLoc = locations[toIdx];
+        let product = products[Math.floor(Math.random() * products.length)];
+        let salary = calculateSalary(product, fromLoc, toLoc);
+        let newId = contractCounter++;
+        let newContract = {
+            id: newId,
+            product: product,
+            from: fromLoc,
+            to: toLoc,
+            salary: salary,
+            driver: `${driverData.firstName} ${driverData.lastName}`,
+            status: 'accepted',
+            acceptedTime: new Date(),
+            endTime: new Date(Date.now() + 10 * 60 * 1000) // +10 минут
         };
+        currentContract = newContract;
+        // добавляем в историю
+        addToHistory(currentContract, 'accepted');
+        saveToLocalStorage();
+        displayActiveContract();
+        startContractTimer();
+        // блокируем кнопку генерации нового
+        generateContractBtn.disabled = true;
+        activeWarningDiv.style.display = 'block';
+        completeContractBtn.style.display = 'block';
+        return true;
+    }
 
-        // Переменные состояния
-        let currentContract = null;
-        let contractTimer = null;
-        let updateTimer = null;
-        let highDemandProducts = [];
-        let contractsHistory = [];
-        let contractCounter = 1;
-        let driverData = null;
-        let contractsGeneratedCount = 0;
+    function displayActiveContract() {
+        if(!currentContract) return;
+        contractsContainer.innerHTML = '';
+        let card = document.createElement('div');
+        card.className = 'contract-card';
+        if(highDemandProducts.includes(currentContract.product)) card.classList.add('high-demand');
+        let end = new Date(currentContract.endTime);
+        card.innerHTML = `
+            <div class="contract-id">🚛 ВЫЗОВ #${currentContract.id} (АКТИВЕН)</div>
+            <div class="contract-details">
+                <p><strong>Товар:</strong> ${currentContract.product}</p>
+                <p><strong>Откуда:</strong> ${currentContract.from}</p>
+                <p><strong>Куда:</strong> ${currentContract.to}</p>
+                <p><strong>Зарплата:</strong> ${currentContract.salary} руб.</p>
+                <p><strong>Принят:</strong> ${formatTime(currentContract.acceptedTime)}</p>
+                <p><strong>Дедлайн:</strong> ${formatTime(end)}</p>
+            </div>
+            <div class="contract-timer" id="dynamicTimer">Осталось: --:--</div>
+            <div class="salary-note">⭐ Для получения зарплаты предоставьте доказательства выполнения заказа начальнику.</div>
+        `;
+        contractsContainer.appendChild(card);
+        updateTimerDisplay();
+    }
 
-        // Элементы DOM
-        const initialGenerateBtn = document.getElementById('initialGenerateContract');
-        const saveDriverDataBtn = document.getElementById('saveDriverData');
-        const generateContractBtn = document.getElementById('generateContract');
-        const completeContractBtn = document.getElementById('completeContract');
-        const contractsContainer = document.getElementById('contractsContainer');
-        const highDemandElement = document.getElementById('highDemand');
-        const nextUpdateTimer = document.getElementById('nextUpdateTimer');
-        const historyTableBody = document.getElementById('historyTableBody');
-        const driverFormContainer = document.getElementById('driverFormContainer');
-        const contractGenerationSection = document.getElementById('contractGenerationSection');
-        const initialGenerateSection = document.getElementById('initialGenerateSection');
-        const clearHistoryBtn = document.getElementById('clearHistory');
-        const clearPasswordInput = document.getElementById('clearPassword');
-        const historyHeader = document.getElementById('historyHeader');
-        const historyContent = document.getElementById('historyContent');
-        const historyCollapseIcon = document.getElementById('historyCollapseIcon');
-        const completedCount = document.getElementById('completedCount');
-        const activeContractWarning = document.getElementById('activeContractWarning');
+    function updateTimerDisplay() {
+        if(!currentContract || !currentContract.endTime) return;
+        let diff = new Date(currentContract.endTime) - Date.now();
+        if(diff <= 0) {
+            if(contractTimerInterval) clearInterval(contractTimerInterval);
+            expireCurrentContract();
+            return;
+        }
+        let mins = Math.floor(diff / 60000);
+        let secs = Math.floor((diff % 60000) / 1000);
+        let timerSpan = document.getElementById('dynamicTimer');
+        if(timerSpan) timerSpan.innerText = `⏱ Осталось: ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+    }
 
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загрузка данных из localStorage
-            loadFromLocalStorage();
-            
-            // Обработчик первоначальной кнопки генерации
-            initialGenerateBtn.addEventListener('click', function() {
-                initialGenerateSection.style.display = 'none';
-                driverFormContainer.style.display = 'block';
-            });
-            
-            // Обработчик кнопки сохранения данных водителя и генерации контракта
-            saveDriverDataBtn.addEventListener('click', function() {
-                const firstName = document.getElementById('firstName').value;
-                const lastName = document.getElementById('lastName').value;
-                const passport = document.getElementById('passport').value;
-                const license = document.getElementById('license').value;
-                
-                if (!firstName || !lastName || !passport || !license) {
-                    alert('Пожалуйста, заполните все данные водителя!');
-                    return;
+    function startContractTimer() {
+        if(contractTimerInterval) clearInterval(contractTimerInterval);
+        contractTimerInterval = setInterval(() => {
+            if(currentContract && currentContract.status === 'accepted') {
+                updateTimerDisplay();
+                if(new Date(currentContract.endTime) <= Date.now()) {
+                    expireCurrentContract();
                 }
-                
-                driverData = {
-                    firstName: firstName,
-                    lastName: lastName,
-                    passport: passport,
-                    license: license
-                };
-                
-                // Скрываем форму и показываем секцию контрактов
-                driverFormContainer.style.display = 'none';
-                contractGenerationSection.style.display = 'block';
-                
-                // Генерируем контракт
-                generateNewContract();
-            });
-            
-            // Обработчик кнопки генерации контракта (последующие вызовы)
-            generateContractBtn.addEventListener('click', function() {
-                // Проверяем, есть ли уже активный контракт
-                if (currentContract && currentContract.status === 'accepted') {
-                    alert('У вас уже есть активный вызов. Завершите его перед генерацией нового.');
-                    return;
-                }
-                
-                // Показываем форму водителя перед генерацией
-                driverFormContainer.style.display = 'block';
-                contractGenerationSection.style.display = 'none';
-                
-                // Сбрасываем форму
-                document.getElementById('firstName').value = '';
-                document.getElementById('lastName').value = '';
-                document.getElementById('passport').value = '';
-                document.getElementById('license').value = '';
-            });
-            
-            // Обработчик кнопки завершения контракта
-            completeContractBtn.addEventListener('click', completeCurrentContract);
-            
-            // Обработчик очистки истории
-            clearHistoryBtn.addEventListener('click', function() {
-                const password = clearPasswordInput.value;
-                if (password === "121212") {
-                    contractsHistory = [];
-                    contractCounter = 1; // Сброс номера вызова
-                    saveToLocalStorage();
-                    updateHistoryTable();
-                    clearPasswordInput.value = '';
-                    alert('История очищена и номера вызовов сброшены!');
-                } else {
-                    alert('Неверный пароль!');
-                }
-            });
-            
-            // Обработчик сворачивания истории
-            historyHeader.addEventListener('click', function() {
-                historyContent.classList.toggle('collapsed');
-                historyCollapseIcon.textContent = historyContent.classList.contains('collapsed') ? '▶' : '▼';
-            });
-            
-            // Запуск таймеров
-            startUpdateTimer();
-            updateHighDemandProducts();
-            
-            // Проверка активного контракта
-            if (currentContract && currentContract.status === 'accepted') {
-                displayActiveContract();
-                startContractTimer();
-                // Блокируем кнопку генерации, если есть активный контракт
-                generateContractBtn.disabled = true;
-                activeContractWarning.style.display = 'block';
+            } else if(!currentContract) {
+                if(contractTimerInterval) clearInterval(contractTimerInterval);
             }
-            
-            // Обновление счетчика выполненных контрактов
-            updateCompletedCount();
-        });
+        }, 1000);
+    }
 
-        // Функция генерации нового контракта
-        function generateNewContract() {
-            // Проверяем, есть ли уже активный контракт
-            if (currentContract && currentContract.status === 'accepted') {
-                alert('У вас уже есть активный вызов. Завершите его перед генерацией нового.');
-                return;
-            }
-            
-            // Очистка предыдущего контракта
-            contractsContainer.innerHTML = '';
-            
-            // Генерация случайного контракта
-            const fromLocation = locations[Math.floor(Math.random() * locations.length)];
-            let toLocation = locations[Math.floor(Math.random() * locations.length)];
-            
-            // Убедимся, что пункт назначения отличается от пункта отправления
-            while (toLocation === fromLocation) {
-                toLocation = locations[Math.floor(Math.random() * locations.length)];
-            }
-            
-            const product = products[Math.floor(Math.random() * products.length)];
-            
-            // Расчет зарплаты
-            let salary = Math.floor(Math.random() * 4501); // от 0 до 4500
-            
-            // Применение модификаторов
-            // 1. Модификатор за границу
-            if (fromLocation.includes('(За границей)') && toLocation.includes('(За границей)')) {
-                salary = Math.floor(salary * 1.5);
-            }
-            
-            // 2. Модификаторы по категориям товаров
-            let categoryMultiplier = 1;
-            for (const [category, multiplier] of Object.entries(categories)) {
-                if (productCategories[category].includes(product)) {
-                    categoryMultiplier = multiplier;
-                    break;
-                }
-            }
-            salary = Math.floor(salary * categoryMultiplier);
-            
-            // 3. Модификатор высокого спроса
-            if (highDemandProducts.includes(product)) {
-                salary = Math.floor(salary * 2);
-            }
-            
-            // Создание контракта
-            currentContract = {
-                id: contractCounter++,
-                product: product,
-                from: fromLocation,
-                to: toLocation,
-                salary: salary,
-                driver: `${driverData.firstName} ${driverData.lastName}`,
-                status: 'active',
-                startTime: new Date()
-            };
-            
-            // Увеличиваем счетчик сгенерированных контрактов
-            contractsGeneratedCount++;
-            
-            // Обновляем высокий спрос каждые 4 контракта
-            if (contractsGeneratedCount % 4 === 0) {
+    function expireCurrentContract() {
+        if(!currentContract) return;
+        if(currentContract.status === 'accepted') {
+            currentContract.status = 'expired';
+            updateHistoryStatus(currentContract.id, 'expired');
+            contractsContainer.innerHTML = `<div class="contract-card" style="border-left-color:#ef4444;"><div class="contract-id">⛔ ВЫЗОВ #${currentContract.id} (ПРОСРОЧЕН)</div><p>Время выполнения истекло. Контракт аннулирован.</p></div>`;
+            completeContractBtn.style.display = 'none';
+            currentContract = null;
+            generateContractBtn.disabled = false;
+            activeWarningDiv.style.display = 'none';
+            saveToLocalStorage();
+        }
+        if(contractTimerInterval) clearInterval(contractTimerInterval);
+        contractTimerInterval = null;
+    }
+
+    function completeCurrentContract() {
+        if(!currentContract || currentContract.status !== 'accepted') {
+            alert('Нет активного вызова для завершения');
+            return;
+        }
+        if(new Date(currentContract.endTime) < Date.now()) {
+            expireCurrentContract();
+            return;
+        }
+        currentContract.status = 'completed';
+        updateHistoryStatus(currentContract.id, 'completed');
+        alert(`✅ Контракт #${currentContract.id} завершен! Заработано: ${currentContract.salary} руб.`);
+        completeContractBtn.style.display = 'none';
+        contractsContainer.innerHTML = `<div class="contract-card"><div class="contract-id">🏆 ВЫЗОВ #${currentContract.id} ВЫПОЛНЕН</div><p>Зарплата ${currentContract.salary} руб. зачислена.</p></div>`;
+        currentContract = null;
+        generateContractBtn.disabled = false;
+        activeWarningDiv.style.display = 'none';
+        if(contractTimerInterval) clearInterval(contractTimerInterval);
+        saveToLocalStorage();
+    }
+
+    // Обновление товаров высокого спроса (строго по таймеру, без привязки к контрактам)
+    function updateHighDemandProducts() {
+        let shuffled = [...products];
+        for(let i=shuffled.length - 1; i>0; i--){ let j=Math.floor(Math.random()*(i+1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; }
+        highDemandProducts = [shuffled[0], shuffled[1]];
+        highDemandElem.innerText = highDemandProducts.join(', ');
+        // сбросить таймер следующего обновления на +10 минут
+        nextUpdateTimestamp = Date.now() + 10 * 60 * 1000;
+        saveToLocalStorage();
+        // если есть активный контракт, обновляем отображение (подсветка high-demand)
+        if(currentContract && currentContract.status === 'accepted') displayActiveContract();
+    }
+
+    // Глобальный цикл обновления таймера спроса и автоматического обновления
+    function startGlobalUpdateTimer() {
+        if(globalUpdateInterval) clearInterval(globalUpdateInterval);
+        globalUpdateInterval = setInterval(() => {
+            if(nextUpdateTimestamp && Date.now() >= nextUpdateTimestamp) {
                 updateHighDemandProducts();
             }
-            
-            // Сохранение в localStorage
-            saveToLocalStorage();
-            
-            // Автоматически принимаем контракт
-            acceptContract();
-        }
-
-        // Функция принятия контракта
-        function acceptContract() {
-            if (currentContract) {
-                currentContract.status = 'accepted';
-                currentContract.acceptedTime = new Date();
-                
-                // Расчет времени окончания (10 минут с момента принятия)
-                const endTime = new Date(currentContract.acceptedTime);
-                endTime.setMinutes(endTime.getMinutes() + 10);
-                currentContract.endTime = endTime;
-                
-                // Сохранение в localStorage
-                saveToLocalStorage();
-                
-                // Отображение активного контракта
-                displayActiveContract();
-                
-                // Добавление в историю
-                addToHistory(currentContract);
-                
-                // Блокируем кнопку генерации
-                generateContractBtn.disabled = true;
-                activeContractWarning.style.display = 'block';
-                
-                // Запуск таймера контракта
-                startContractTimer();
-            }
-        }
-
-        // Функция отображения активного контракта
-        function displayActiveContract() {
-            contractsContainer.innerHTML = '';
-            
-            const contractElement = document.createElement('div');
-            contractElement.className = 'contract';
-            
-            if (highDemandProducts.includes(currentContract.product)) {
-                contractElement.classList.add('high-demand');
-            }
-            
-            const acceptedTime = new Date(currentContract.acceptedTime);
-            const endTime = new Date(currentContract.endTime);
-            
-            contractElement.innerHTML = `
-                <div class="contract-id">Контракт #${currentContract.id} (ПРИНЯТ)</div>
-                <div class="contract-details">
-                    <p><strong>Товар:</strong> ${currentContract.product}</p>
-                    <p><strong>Откуда:</strong> ${currentContract.from}</p>
-                    <p><strong>Куда:</strong> ${currentContract.to}</p>
-                    <p><strong>Зарплата:</strong> ${currentContract.salary} руб.</p>
-                    <p><strong>Время принятия:</strong> ${formatTime(acceptedTime)}</p>
-                    <p><strong>Завершить до:</strong> ${formatTime(endTime)}</p>
-                </div>
-                <div class="contract-timer" id="contractTimer">Осталось времени: 10:00</div>
-                <div class="salary-note">
-                    <strong>Примечание:</strong> Для получения зарплаты предоставьте доказательства выполнения заказа начальнику.
-                </div>
-            `;
-            
-            contractsContainer.appendChild(contractElement);
-            
-            // Показать кнопку завершения контракта
-            completeContractBtn.style.display = 'block';
-        }
-
-        // Функция завершения текущего контракта
-        function completeCurrentContract() {
-            if (currentContract && currentContract.status === 'accepted') {
-                currentContract.status = 'completed';
-                currentContract.completedTime = new Date();
-                
-                // Обновление статуса в истории
-                updateHistoryStatus(currentContract.id, 'completed');
-                
-                alert(`Контракт #${currentContract.id} завершен! Заработано: ${currentContract.salary} руб.`);
-                
-                // Сброс текущего контракта
-                currentContract = null;
-                contractsContainer.innerHTML = '';
-                completeContractBtn.style.display = 'none';
-                
-                // Разблокируем кнопку генерации
-                generateContractBtn.disabled = false;
-                activeContractWarning.style.display = 'none';
-                
-                // Сохранение в localStorage
-                saveToLocalStorage();
-                
-                // Обновление счетчика выполненных контрактов
-                updateCompletedCount();
-                
-                // Остановка таймера контракта
-                if (contractTimer) {
-                    clearInterval(contractTimer);
+            // обновляем отображение таймера до следующего обновления
+            if(nextUpdateTimestamp) {
+                let diff = nextUpdateTimestamp - Date.now();
+                if(diff > 0) {
+                    let mins = Math.floor(diff / 60000);
+                    let secs = Math.floor((diff % 60000) / 1000);
+                    nextUpdateTimerSpan.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+                } else {
+                    nextUpdateTimerSpan.innerText = "00:00";
                 }
             } else {
-                alert('Нет активного контракта для завершения!');
+                nextUpdateTimerSpan.innerText = "10:00";
             }
-        }
+        }, 500);
+    }
 
-        // Функция запуска таймера контракта
-        function startContractTimer() {
-            contractTimer = setInterval(function() {
-                if (currentContract && currentContract.endTime) {
-                    const now = new Date();
-                    const endTime = new Date(currentContract.endTime);
-                    const timeLeft = endTime - now;
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(contractTimer);
-                        currentContract.status = 'expired';
-                        
-                        // Обновление статуса в истории
-                        updateHistoryStatus(currentContract.id, 'expired');
-                        
-                        // Обновление отображения контракта
-                        const contractElement = contractsContainer.querySelector('.contract');
-                        if (contractElement) {
-                            contractElement.innerHTML = `
-                                <div class="contract-id">Контракт #${currentContract.id} (ВРЕМЯ ИСТЕКЛО)</div>
-                                <div class="contract-details">
-                                    <p><strong>Товар:</strong> ${currentContract.product}</p>
-                                    <p><strong>Откуда:</strong> ${currentContract.from}</p>
-                                    <p><strong>Куда:</strong> ${currentContract.to}</p>
-                                    <p><strong>Зарплата:</strong> ${currentContract.salary} руб.</p>
-                                </div>
-                                <div class="contract-timer">Время истекло!</div>
-                            `;
-                        }
-                        
-                        // Сброс текущего контракта
-                        currentContract = null;
-                        completeContractBtn.style.display = 'none';
-                        
-                        // Разблокируем кнопку генерации
-                        generateContractBtn.disabled = false;
-                        activeContractWarning.style.display = 'none';
-                        
-                        // Сохранение в localStorage
-                        saveToLocalStorage();
-                    } else {
-                        const minutes = Math.floor(timeLeft / 60000);
-                        const seconds = Math.floor((timeLeft % 60000) / 1000);
-                        
-                        const timerElement = document.getElementById('contractTimer');
-                        if (timerElement) {
-                            timerElement.textContent = `Осталось времени: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                        }
-                    }
-                }
-            }, 1000);
-        }
+    // Сохранение / загрузка localStorage (включая таймеры)
+    function saveToLocalStorage() {
+        let data = {
+            driverData, currentContract, contractsHistory, contractCounter, highDemandProducts,
+            nextUpdateTimestamp
+        };
+        localStorage.setItem('truckingSystem_v3', JSON.stringify(data));
+    }
 
-        // Функция запуска таймера обновления контрактов
-        function startUpdateTimer() {
-            let timeLeft = 600; // 10 минут в секундах
-            
-            updateTimer = setInterval(function() {
-                timeLeft--;
-                
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                
-                nextUpdateTimer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    timeLeft = 600; // Сброс таймера
+    function loadFromLocalStorage() {
+        let raw = localStorage.getItem('truckingSystem_v3');
+        if(!raw) return;
+        try{
+            let data = JSON.parse(raw);
+            driverData = data.driverData;
+            currentContract = data.currentContract;
+            contractsHistory = data.contractsHistory || [];
+            contractCounter = data.contractCounter || 1;
+            highDemandProducts = data.highDemandProducts || [];
+            nextUpdateTimestamp = data.nextUpdateTimestamp;
+            if(highDemandProducts.length === 0) highDemandProducts = ["Газобетон","Яблоки"];
+            // валидация активного контракта
+            if(currentContract && currentContract.status === 'accepted') {
+                let end = new Date(currentContract.endTime);
+                if(end <= Date.now()) {
+                    currentContract.status = 'expired';
+                    updateHistoryStatus(currentContract.id, 'expired');
+                    currentContract = null;
+                } else {
+                    generateContractBtn.disabled = true;
+                    activeWarningDiv.style.display = 'block';
+                    completeContractBtn.style.display = 'block';
+                    startContractTimer();
+                    displayActiveContract();
                 }
-            }, 1000);
-        }
-
-        // Функция обновления товаров с высоким спросом
-        function updateHighDemandProducts() {
-            highDemandProducts = [];
-            
-            // Выбор двух случайных товаров
-            while (highDemandProducts.length < 2) {
-                const randomProduct = products[Math.floor(Math.random() * products.length)];
-                if (!highDemandProducts.includes(randomProduct)) {
-                    highDemandProducts.push(randomProduct);
-                }
+            } else {
+                currentContract = null;
+                generateContractBtn.disabled = false;
+                completeContractBtn.style.display = 'none';
+                activeWarningDiv.style.display = 'none';
             }
-            
-            highDemandElement.textContent = `${highDemandProducts.join(', ')}`;
-            saveToLocalStorage();
-        }
-
-        // Функция добавления контракта в историю
-        function addToHistory(contract) {
-            const historyItem = {
-                id: contract.id,
-                date: contract.acceptedTime ? formatTime(contract.acceptedTime) : formatTime(contract.startTime),
-                from: contract.from,
-                to: contract.to,
-                product: contract.product,
-                driver: contract.driver,
-                salary: contract.salary,
-                status: contract.status
-            };
-            
-            contractsHistory.push(historyItem);
-            saveToLocalStorage();
-            updateHistoryTable();
-        }
-
-        // Функция обновления статуса в истории
-        function updateHistoryStatus(contractId, status) {
-            const contractIndex = contractsHistory.findIndex(item => item.id === contractId);
-            if (contractIndex !== -1) {
-                contractsHistory[contractIndex].status = status;
-                saveToLocalStorage();
-                updateHistoryTable();
-                updateCompletedCount();
+            // Восстанавливаем таймер спроса, если он протух — обновляем
+            if(!nextUpdateTimestamp || nextUpdateTimestamp < Date.now()) {
+                updateHighDemandProducts();
+            } else {
+                highDemandElem.innerText = highDemandProducts.join(', ');
             }
-        }
+            renderHistoryTable();
+        } catch(e) {}
+    }
 
-        // Функция обновления таблицы истории
-        function updateHistoryTable() {
-            historyTableBody.innerHTML = '';
-            
-            contractsHistory.forEach(item => {
-                const row = document.createElement('tr');
-                
-                let statusClass = '';
-                let statusText = '';
-                
-                switch (item.status) {
-                    case 'completed':
-                        statusClass = 'status-completed';
-                        statusText = 'Выполнено';
-                        break;
-                    case 'expired':
-                        statusClass = 'status-expired';
-                        statusText = 'Время истекло';
-                        break;
-                    case 'accepted':
-                        statusClass = 'status-active';
-                        statusText = 'Выполняется';
-                        break;
-                    default:
-                        statusClass = 'status-active';
-                        statusText = 'Активно';
-                }
-                
-                row.innerHTML = `
-                    <td>#${item.id}</td>
-                    <td>${item.date}</td>
-                    <td>${item.from}</td>
-                    <td>${item.to}</td>
-                    <td>${item.product}</td>
-                    <td>${item.driver}</td>
-                    <td>${item.salary} руб.</td>
-                    <td class="${statusClass}">${statusText}</td>
-                `;
-                
-                historyTableBody.appendChild(row);
-            });
+    // Очистка истории и сброс счетчика
+    function resetHistoryAndCounter() {
+        contractsHistory = [];
+        contractCounter = 1;
+        if(currentContract) {
+            if(currentContract.status === 'accepted') expireCurrentContract();
+            else currentContract = null;
         }
+        generateContractBtn.disabled = false;
+        completeContractBtn.style.display = 'none';
+        activeWarningDiv.style.display = 'none';
+        saveToLocalStorage();
+        renderHistoryTable();
+        alert('История очищена, номера вызовов сброшены.');
+    }
 
-        // Функция обновления счетчика выполненных контрактов
-        function updateCompletedCount() {
-            const completedContracts = contractsHistory.filter(contract => contract.status === 'completed').length;
-            completedCount.textContent = completedContracts;
+    // Инициализация UI и обработчики
+    function initUI() {
+        loadFromLocalStorage();
+        if(driverData) {
+            initialSection.style.display = 'none';
+            driverFormDiv.style.display = 'none';
+            contractSection.style.display = 'block';
+            document.getElementById('firstName').value = driverData.firstName || '';
+            document.getElementById('lastName').value = driverData.lastName || '';
+            document.getElementById('passport').value = driverData.passport || '';
+            document.getElementById('license').value = driverData.license || '';
+        } else {
+            initialSection.style.display = 'block';
+            driverFormDiv.style.display = 'none';
+            contractSection.style.display = 'none';
         }
+        startGlobalUpdateTimer();
+    }
 
-        // Функция форматирования времени
-        function formatTime(date) {
-            const d = new Date(date);
-            return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')} ${d.getDate().toString().padStart(2, '0')}.${(d.getMonth()+1).toString().padStart(2, '0')}.${d.getFullYear()}`;
+    // Обработчики событий
+    initialGenerateBtn.onclick = () => {
+        initialSection.style.display = 'none';
+        driverFormDiv.style.display = 'block';
+    };
+    saveDriverBtn.onclick = () => {
+        let fname = document.getElementById('firstName').value.trim();
+        let lname = document.getElementById('lastName').value.trim();
+        let passport = document.getElementById('passport').value.trim();
+        let license = document.getElementById('license').value.trim();
+        if(!fname || !lname || !passport || !license) { alert('Заполните все поля водителя'); return; }
+        driverData = { firstName: fname, lastName: lname, passport, license };
+        driverFormDiv.style.display = 'none';
+        contractSection.style.display = 'block';
+        generateNewContract();
+        saveToLocalStorage();
+    };
+    generateContractBtn.onclick = () => {
+        if(currentContract && currentContract.status === 'accepted') { alert('Сначала завершите текущий вызов'); return; }
+        driverFormDiv.style.display = 'block';
+        contractSection.style.display = 'none';
+        if(driverData) {
+            document.getElementById('firstName').value = driverData.firstName;
+            document.getElementById('lastName').value = driverData.lastName;
+            document.getElementById('passport').value = driverData.passport;
+            document.getElementById('license').value = driverData.license;
         }
-
-        // Функция сохранения данных в localStorage
-        function saveToLocalStorage() {
-            const data = {
-                driverData: driverData,
-                currentContract: currentContract,
-                contractsHistory: contractsHistory,
-                contractCounter: contractCounter,
-                highDemandProducts: highDemandProducts,
-                contractsGeneratedCount: contractsGeneratedCount
-            };
-            
-            localStorage.setItem('truckingSystem', JSON.stringify(data));
-        }
-
-        // Функция загрузки данных из localStorage
-        function loadFromLocalStorage() {
-            const data = JSON.parse(localStorage.getItem('truckingSystem'));
-            
-            if (data) {
-                driverData = data.driverData;
-                currentContract = data.currentContract;
-                contractsHistory = data.contractsHistory || [];
-                contractCounter = data.contractCounter || 1;
-                highDemandProducts = data.highDemandProducts || ['Газобетон', 'Яблоки'];
-                contractsGeneratedCount = data.contractsGeneratedCount || 0;
-                
-                // Обновление интерфейса на основе загруженных данных
-                if (driverData) {
-                    document.getElementById('firstName').value = driverData.firstName;
-                    document.getElementById('lastName').value = driverData.lastName;
-                    document.getElementById('passport').value = driverData.passport;
-                    document.getElementById('license').value = driverData.license;
-                    
-                    initialGenerateSection.style.display = 'none';
-                    driverFormContainer.style.display = 'none';
-                    contractGenerationSection.style.display = 'block';
-                }
-                
-                highDemandElement.textContent = highDemandProducts.join(', ');
-                updateHistoryTable();
-                updateCompletedCount();
-            }
-        }
-    </script>
+    };
+    completeContractBtn.onclick = completeCurrentContract;
+    clearHistoryBtn.onclick = () => {
+        if(clearPass.value === '121212') resetHistoryAndCounter();
+        else alert('Неверный пароль');
+        clearPass.value = '';
+    };
+    historyHeaderDiv.onclick = () => {
+        historyContentDiv.classList.toggle('collapsed');
+        historyCollapseIcon.innerText = historyContentDiv.classList.contains('collapsed') ? '▶' : '▼';
+    };
+    initUI();
+</script>
 </body>
 </html>
